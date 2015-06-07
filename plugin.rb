@@ -1,13 +1,13 @@
-# name: restricted-attachments
-# about: The plugin allows to restrict access to attachments to concrete user groups.
+# name: restricted-files
+# about: The plugin allows to restrict access to files to concrete user groups.
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: http://discourse.pro/t/33
 after_initialize do
-	module ::RestrictedAttachments
+	module ::RestrictedFiles
 		class Engine < ::Rails::Engine
-			engine_name 'restricted_attachments'
-			isolate_namespace RestrictedAttachments
+			engine_name 'restricted_files'
+			isolate_namespace RestrictedFiles
 		end
 		require_dependency 'application_controller'
 		class IndexController < ::ApplicationController
@@ -27,9 +27,9 @@ after_initialize do
 		end
 	end
 	Discourse::Application.routes.prepend do
-		mount ::RestrictedAttachments::Engine, at: 'attachment'
+		mount ::RestrictedFiles::Engine, at: 'file'
 	end
-	RestrictedAttachments::Engine.routes.draw do
+	RestrictedFiles::Engine.routes.draw do
 		get '/:id' => 'index#index'
 	end
 	Upload.class_eval do
@@ -75,7 +75,7 @@ after_initialize do
 					url = Discourse.store.store_upload(f, upload, options[:content_type])
 					if url.present?
 						# BEGIN PATCH
-						upload.url = "/attachment/#{upload.id}"
+						upload.url = "/file/#{upload.id}"
 						# END PATCH
 						upload.save
 					else
