@@ -74,7 +74,9 @@ after_initialize do
 				File.open(file.path) do |f|
 					url = Discourse.store.store_upload(f, upload, options[:content_type])
 					if url.present?
+						# BEGIN PATCH
 						upload.url = "/attachment/#{upload.id}"
+						# END PATCH
 						upload.save
 					else
 						upload.errors.add(:url, I18n.t("upload.store_failure", { upload_id: upload.id, user_id: user_id }))
