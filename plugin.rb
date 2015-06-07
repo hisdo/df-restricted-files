@@ -13,15 +13,15 @@ after_initialize do
 		class IndexController < ::ApplicationController
 			layout false
 			skip_before_filter :preload_json, :check_xhr
+			#prepend_view_path "#{Rails.root}/plugins/dog/app/views"
 			def index
+				viewBase = "#{Rails.root}/plugins/restrict-files/app/views/"
 				if SiteSetting.prevent_anons_from_downloading_files && current_user.nil?
-					return render nothing: true, status: 401
-				end
-				if upload = Upload.find(params[:id])
-					#send_file "#{Rails.root}/public#{Discourse.store.get_path_for_upload(upload)}",
+					render :file => "#{viewBase}401.html.erb", :status => 401
+				elsif upload = Upload.find(params[:id])
 					send_file Discourse.store.path_for(upload), filename: upload.original_filename
 				else
-					return render nothing: true, status: 404
+					render :file => "#{viewBase}404.html.erb", :status => 404
 				end
 			end
 		end
