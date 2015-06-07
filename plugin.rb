@@ -1,5 +1,5 @@
 # name: restricted-files
-# about: The plugin allows to restrict access to files to concrete user groups.
+# about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: http://discourse.pro/t/33

@@ -1,0 +1,7 @@
+plugins:
+  «Restrict_Files»_Enabled:
+    default: true
+    client: true
+  «Restrict_Files»_No_Access_Mesage:
+    default: ''
+    client: true

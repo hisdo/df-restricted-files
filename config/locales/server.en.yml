@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    «Restrict_Files»_Enabled: "Enable «<a href='http://discourse.pro/t/33'>Restrict Files</a>» plugin."
+    «Restrict_Files»_No_Access_Mesage: "A message to an unauthorized user."
