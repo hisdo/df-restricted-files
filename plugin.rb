@@ -1,13 +1,13 @@
-# name: restricted-files
+# name: restrict-files
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: http://discourse.pro/t/33
 after_initialize do
-	module ::RestrictedFiles
+	module ::RestrictFiles
 		class Engine < ::Rails::Engine
-			engine_name 'restricted_files'
-			isolate_namespace RestrictedFiles
+			engine_name 'restrict_files'
+			isolate_namespace RestrictFiles
 		end
 		require_dependency 'application_controller'
 		class IndexController < ::ApplicationController
@@ -15,22 +15,33 @@ after_initialize do
 			skip_before_filter :preload_json, :check_xhr
 			def index
 				if SiteSetting.prevent_anons_from_downloading_files && current_user.nil?
-					return render_404
+					return render nothing: true, status: 401
 				end
 				if upload = Upload.find(params[:id])
-					send_file "#{Rails.root}/public#{Discourse.store.get_path_for_upload(upload)}",
-						filename: upload.original_filename
+					#send_file "#{Rails.root}/public#{Discourse.store.get_path_for_upload(upload)}",
+					send_file Discourse.store.path_for(upload), filename: upload.original_filename
 				else
-					render_404
+					return render nothing: true, status: 404
 				end
 			end
 		end
 	end
 	Discourse::Application.routes.prepend do
-		mount ::RestrictedFiles::Engine, at: 'file'
+		mount ::RestrictFiles::Engine, at: 'file'
 	end
-	RestrictedFiles::Engine.routes.draw do
+	RestrictFiles::Engine.routes.draw do
 		get '/:id' => 'index#index'
+	end
+	require 'file_store/local_store'
+	FileStore::LocalStore.class_eval do
+		alias_method :core__path_for, :path_for
+		def path_for(upload)
+			if upload and upload.url and upload.url.start_with?('/file/')
+				"#{Rails.root}/public#{Discourse.store.get_path_for_upload(upload)}"
+			else
+				core__path_for upload
+			end
+		end
 	end
 	Upload.class_eval do
 		# options
@@ -75,7 +86,11 @@ after_initialize do
 					url = Discourse.store.store_upload(f, upload, options[:content_type])
 					if url.present?
 						# BEGIN PATCH
-						upload.url = "/file/#{upload.id}"
+						if FileHelper.is_image?(filename)
+							upload.url = url
+						else
+							upload.url = "/file/#{upload.id}"
+						end
 						# END PATCH
 						upload.save
 					else
