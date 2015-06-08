@@ -1,6 +1,6 @@
 plugins:
   «Restrict_Files»_Enabled:
-    default: true
+    default: false
     client: true
   «Restrict_Files»_Access_List_Type:
     enum: 'RestrictFilesAccessListType'
