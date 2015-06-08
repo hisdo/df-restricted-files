@@ -1,4 +1,10 @@
-<% if true %>
-	СОСИ ХУЙ
-<% end %>
-И ПОПУ ТОЖЕ ПОДСТАВЛЯЙ :-)
+<html><body>
+	<% message = SiteSetting.send('«Restrict_Files»_No_Access_Mesage') %>
+	<% if not message.empty? %>
+		<%= raw message %>
+	<% else %>
+		A message to unauthorized and unauthenticated users.
+		<br/>You can use <b>HTML tags</b> here, including a link to a payment page.
+		<br/>To receive payments you can use <a href='http://discourse.pro/t/29'>PayPal Buy Now</a> plugin.
+	<% end %>
+</body></html>

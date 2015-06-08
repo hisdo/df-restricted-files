@@ -1,4 +1,4 @@
 ru:
   site_settings:
     «Restrict_Files»_Enabled: "Включить плагин «<a href='http://discourse.pro/t/33'>Restrict Files</a>»?."
-    «Restrict_Files»_No_Access_Mesage: "Сообщение не имеющему права доступа посетителю."
+    «Restrict_Files»_No_Access_Mesage: "Сообщение не имеющему права доступа или анонимному посетителю."
