@@ -2,6 +2,14 @@ plugins:
   «Restrict_Files»_Enabled:
     default: true
     client: true
+  «Restrict_Files»_Access_List_Type:
+    enum: 'RestrictFilesAccessListType'
+    default: 'whitelist'
+    client: true
+  «Restrict_Files»_Access_List:
+    client: true
+    type: list
+    default: 'admins|moderators|staff'
   «Restrict_Files»_No_Access_Mesage:
     default: "A message to unauthorized and unauthenticated users.<br/>You can use <b>HTML tags</b> here, including a link to a payment page.<br/>To receive payments you can use <a href='http://discourse.pro/t/29'>PayPal Buy Now</a> plugin."
     client: true

@@ -3,6 +3,7 @@
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: http://discourse.pro/t/33
+Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/restrict-files/app/models"]
 after_initialize do
 	module ::RestrictFiles
 		class Engine < ::Rails::Engine
@@ -13,15 +14,34 @@ after_initialize do
 		class IndexController < ::ApplicationController
 			layout false
 			skip_before_filter :preload_json, :check_xhr
-			#prepend_view_path "#{Rails.root}/plugins/dog/app/views"
 			def index
 				viewBase = "#{Rails.root}/plugins/restrict-files/app/views/"
-				if SiteSetting.prevent_anons_from_downloading_files && current_user.nil?
-					render :file => "#{viewBase}401.html.erb", :status => 401
-				elsif upload = Upload.find(params[:id])
-					send_file Discourse.store.path_for(upload), filename: upload.original_filename
-				else
+				upload = Upload.find(params[:id])
+				if upload.nil?
 					render :file => "#{viewBase}404.html.erb", :status => 404
+				else
+					accessListType = SiteSetting.send '«Restrict_Files»_Access_List_Type'
+					isWhiteList = 'blacklist' != accessListType
+					accessList = SiteSetting.send '«Restrict_Files»_Access_List'
+					accessList = accessList.split '|'
+					allowed = false;
+					if current_user.nil?
+						allowedInCore = !SiteSetting.prevent_anons_from_downloading_files
+						allowed = allowedInCore or accessList.include?('everyone')
+					else
+						if upload.user_id == current_user.id
+							allowed = true
+						else
+							userGroupNames = current_user.groups.pluck(:name)
+							intersection = accessList & userGroupNames
+							allowed = !(intersection.empty?)
+						end
+					end
+					if not allowed
+						render :file => "#{viewBase}401.html.erb", :status => 401
+					else
+						send_file Discourse.store.path_for(upload), filename: upload.original_filename
+					end
 				end
 			end
 		end
@@ -86,7 +106,8 @@ after_initialize do
 					url = Discourse.store.store_upload(f, upload, options[:content_type])
 					if url.present?
 						# BEGIN PATCH
-						if FileHelper.is_image?(filename)
+						pluginEnabled = SiteSetting.send '«Restrict_Files»_Enabled'
+						if FileHelper.is_image?(filename) or not pluginEnabled
 							upload.url = url
 						else
 							upload.url = "/file/#{upload.id}"

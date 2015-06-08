@@ -1,5 +1,5 @@
 <html><body>
-	<% message = SiteSetting.send('«Restrict_Files»_No_Access_Mesage') %>
+	<% message = SiteSetting.send '«Restrict_Files»_No_Access_Mesage' %>
 	<% if not message.empty? %>
 		<%= raw message %>
 	<% else %>

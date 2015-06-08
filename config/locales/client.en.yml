@@ -1,0 +1,4 @@
+en:
+  js:
+    whitelist: 'whitelist'
+    blacklist: 'blacklist'
