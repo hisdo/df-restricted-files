@@ -1,8 +1,8 @@
-<% message = SiteSetting.send '«Restrict_Files»_Mesage_To_Unauthenticated' %>
+<% message = SiteSetting.send '«Restrict_Files»_Mesage_To_Unauthorized' %>
 <% if not message.empty? %>
 	<%= raw message %>
 <% else %>
-	A message to unauthenticated (anonymous, not logged in) users.
+	A message to unauthorized users.
 	<br/>You can use <b>HTML tags</b> here, including a link to a payment page.
 	<br/>To receive payments you can use <a href='http://discourse.pro/t/29'>PayPal Buy Now</a> plugin.
 <% end %>

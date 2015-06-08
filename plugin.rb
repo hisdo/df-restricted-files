@@ -17,31 +17,49 @@ after_initialize do
 			def index
 				viewBase = "#{Rails.root}/plugins/restrict-files/app/views/"
 				upload = Upload.find(params[:id])
+				# http://stackoverflow.com/a/6937030/254475
+				status = 403;
 				if upload.nil?
-					render :file => "#{viewBase}404.html.erb", :status => 404
+					status = 404
 				else
-					accessListType = SiteSetting.send '«Restrict_Files»_Access_List_Type'
-					isWhiteList = 'blacklist' != accessListType
-					accessList = SiteSetting.send '«Restrict_Files»_Access_List'
-					accessList = accessList.split '|'
-					allowed = false;
-					if current_user.nil?
-						allowedInCore = !SiteSetting.prevent_anons_from_downloading_files
-						allowed = allowedInCore or accessList.include?('everyone')
-					else
-						if upload.user_id == current_user.id
-							allowed = true
+					pluginEnabled = SiteSetting.send '«Restrict_Files»_Enabled'
+					if not pluginEnabled
+						if current_user.nil? and !SiteSetting.prevent_anons_from_downloading_files
+							status = 401
 						else
-							userGroupNames = current_user.groups.pluck(:name)
-							intersection = accessList & userGroupNames
-							allowed = !(intersection.empty?)
+							status = 200
+						end
+					else
+						accessListType = SiteSetting.send '«Restrict_Files»_Access_List_Type'
+						isWhiteList = 'blacklist' != accessListType
+						accessList = SiteSetting.send '«Restrict_Files»_Access_List'
+						accessList = accessList.split '|'
+						allowed = false;
+						if current_user.nil?
+							if accessList.include? 'everyone'
+								status = 200
+							else
+								status = 401
+							end
+						else
+							if upload.user_id == current_user.id
+								status = 200
+							else
+								userGroupNames = current_user.groups.pluck(:name)
+								intersection = accessList & userGroupNames
+								if intersection.empty?
+									status = 403
+								else
+									status = 200
+								end
+							end
 						end
 					end
-					if not allowed
-						render :file => "#{viewBase}401.html.erb", :status => 401
-					else
-						send_file Discourse.store.path_for(upload), filename: upload.original_filename
-					end
+				end
+				if 200 != status
+					render :file => "#{viewBase}#{status}.html.erb", :status => status
+				else
+					send_file Discourse.store.path_for(upload), filename: upload.original_filename
 				end
 			end
 		end
