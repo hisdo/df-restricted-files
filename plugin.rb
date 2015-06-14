@@ -15,7 +15,7 @@ after_initialize do
 			layout false
 			skip_before_filter :preload_json, :check_xhr
 			def index
-				viewBase = "#{Rails.root}/plugins/restrict-files/app/views/"
+				viewBase = "#{Rails.root}/plugins/df-restrict-files/app/views/"
 				upload = Upload.find(params[:id])
 				# http://stackoverflow.com/a/6937030/254475
 				status = 403;
