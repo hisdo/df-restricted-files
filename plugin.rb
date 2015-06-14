@@ -3,7 +3,7 @@
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/33
-Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/restrict-files/app/models"]
+Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/df-restrict-files/app/models"]
 after_initialize do
 	module ::RestrictFiles
 		class Engine < ::Rails::Engine
