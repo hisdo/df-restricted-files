@@ -1,4 +1,4 @@
-# name: restrict-files
+# name: df-restrict-files
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
 # version: 1.0.0
 # authors: Dmitry Fedyuk
