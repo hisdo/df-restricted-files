@@ -1,6 +1,6 @@
 en:
   site_settings:
-    «Restrict_Files»_Enabled: "Enable «<a href='http://discourse.pro/t/33'>Restrict Files</a>» plugin."
+    «Restrict_Files»_Enabled: "Enable «<a href='https://discourse.pro/t/33'>Restrict Files</a>» plugin."
     «Restrict_Files»_Access_List_Type: "Applied to the <b>Access List</b> field below.<br/>Can be <a href='https://wikipedia.org/wiki/Whitelist'>whitelist</a> or <a href='https://wikipedia.org/wiki/Blacklisting'>blacklist</a>."
     «Restrict_Files»_Access_List: "Enumerate the <a href='../../groups'>user groups</a> who are <b>permitted</b> (if this is a whitelist) or <b>denied</b> (if this is a blacklist) to download files from the forum.<br/>A file is always permitted to be downloaded <b>by its uploader</b>."
     «Restrict_Files»_Mesage_To_Unauthenticated: "A message to unauthenticated (not logged in, anonymous) users."

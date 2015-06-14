@@ -2,7 +2,7 @@
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
 # version: 1.0.0
 # authors: Dmitry Fedyuk
-# url: http://discourse.pro/t/33
+# url: https://discourse.pro/t/33
 Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/restrict-files/app/models"]
 after_initialize do
 	module ::RestrictFiles
