@@ -1,5 +1,5 @@
 import ClickTrack from 'discourse/lib/click-track';
-export default {name: 'restrict-files', initialize() {
+export default {name: 'df-restrict-files', initialize() {
 	/** @type {Function} */
 	var original = ClickTrack.trackClick;
 	/** @type {Boolean} */
