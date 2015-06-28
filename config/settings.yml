@@ -3,7 +3,7 @@ plugins:
     default: false
     client: true
   «Restrict_Files»_Access_List_Type:
-    enum: 'RestrictFilesAccessListType'
+    enum: 'RestrictFiles_AccessListType'
     default: 'whitelist'
     client: true
   «Restrict_Files»_Access_List:

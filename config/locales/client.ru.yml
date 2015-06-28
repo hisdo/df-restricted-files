@@ -1,4 +1,4 @@
 ru:
   js:
-    whitelist: 'белый список'
-    blacklist: 'чёрный список'
+    Sandbox: 'тестовый'
+    Production: 'реальный'
