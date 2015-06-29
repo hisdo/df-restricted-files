@@ -1,9 +1,14 @@
 # name: df-restrict-files
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
-# version: 1.0.0
+# version: 1.1.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/33
 Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/df-restrict-files/app/models"]
+module ::RestrictFiles
+	def self.userGroups
+		Group.order(:name).pluck(:name)
+	end
+end
 after_initialize do
 	module ::RestrictFiles
 		class Engine < ::Rails::Engine
