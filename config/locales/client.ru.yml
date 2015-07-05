@@ -1,4 +1,9 @@
 ru:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          restrict_files: 'Ограничение доступа к файлам'
   js:
     whitelist: 'белый список'
     blacklist: 'чёрный список'
