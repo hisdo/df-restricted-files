@@ -92,7 +92,6 @@ after_initialize do
 	Upload.class_eval do
 		# list of image types that will be cropped
 		CROPPED_IMAGE_TYPES ||= ["avatar", "profile_background", "card_background"]
-
 		# options
 		#   - content_type
 		#   - origin
