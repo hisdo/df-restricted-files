@@ -1,4 +1,4 @@
-restrict_files:
+df_restrict_files:
   «Restrict_Files»_Enabled:
     default: false
     client: true

@@ -3,7 +3,7 @@ ru:
     admin:
       site_settings:
         categories:
-          restrict_files: 'Ограничение доступа к файлам'
+          df_restrict_files: 'Discourse.PRO Ограничение доступа к файлам'
   js:
     whitelist: 'белый список'
     blacklist: 'чёрный список'

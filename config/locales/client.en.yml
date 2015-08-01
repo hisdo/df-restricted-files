@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          restrict_files: 'Restrict Files'
+          df_restrict_files: 'Discourse.PRO Restrict Files'
   js:
     whitelist: 'whitelist'
     blacklist: 'blacklist'
