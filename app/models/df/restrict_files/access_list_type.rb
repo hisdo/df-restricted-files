@@ -6,8 +6,8 @@ module ::Df::RestrictFiles
 		end
 		def self.values
 			@values ||= [
-				{name: 'whitelist', value: 'whitelist'},
-				{name: 'blacklist', value: 'blacklist'}
+				{name: 'df.restrict_files.acl_type.whitelist', value: 'whitelist'},
+				{name: 'df.restrict_files.acl_type.blacklist', value: 'blacklist'}
 			]
 		end
 		def self.translate_names?

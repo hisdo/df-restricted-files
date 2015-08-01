@@ -5,5 +5,8 @@ en:
         categories:
           df_restrict_files: 'Discourse.PRO Restrict Files'
   js:
-    whitelist: 'whitelist'
-    blacklist: 'blacklist'
+    df:
+      restrict_files:
+        acl_type:
+          blacklist: 'blacklist'
+          whitelist: 'whitelist'

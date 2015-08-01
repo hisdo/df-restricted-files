@@ -5,5 +5,9 @@ ru:
         categories:
           df_restrict_files: 'Discourse.PRO Ограничение доступа к файлам'
   js:
-    whitelist: 'белый список'
-    blacklist: 'чёрный список'
+    df:
+      restrict_files:
+        acl_type:
+          blacklist: 'чёрный список'
+          whitelist: 'белый список'
+
