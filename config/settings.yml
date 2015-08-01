@@ -3,7 +3,7 @@ restrict_files:
     default: false
     client: true
   «Restrict_Files»_Access_List_Type:
-    enum: 'RestrictFiles_AccessListType'
+    enum: '::Df::RestrictFiles::AccessListType'
     default: 'whitelist'
     client: true
   «Restrict_Files»_Access_List:
