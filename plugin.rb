@@ -22,7 +22,7 @@ after_initialize do
 			def index
 				viewBase = "#{Rails.root}/plugins/df-restrict-files/app/views/"
 				upload = Upload.find(params[:id])
-				# http://stackoverflow.com/a/6937030/254475
+				# http://stackoverflow.com/a/6937030
 				status = 403;
 				if upload.nil?
 					status = 404
