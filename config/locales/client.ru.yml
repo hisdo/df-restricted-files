@@ -4,6 +4,9 @@ ru:
       site_settings:
         categories:
           df_restrict_files: 'Discourse.PRO Ограничение доступа к файлам'
+    df:
+      files:
+        title: 'Файлы'
   js:
     df:
       restrict_files:

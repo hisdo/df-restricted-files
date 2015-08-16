@@ -1,0 +1,55 @@
+{{!--
+	2015-07-27
+	Discourse предоставляет массу вариантов организации файловой иерархии.
+	Я выбрал тот, который показался мне наиболее удобным.
+
+	Вот возможные варианты, которые я нарыл:
+	javascripts/adminShop/products.hbs
+	javascripts/adminShop.products.hbs
+	javascripts/admin_shop/products.hbs
+	javascripts/admin/shop.products.hbs
+	javascripts/admin_shop_products.hbs
+	javascripts/admin-shop-products.hbs
+	javascripts/admin/shop-products.hbs
+	javascripts/admin_shop.productы.hbs
+
+	Всю логику смотрите в файле app/assets/javascripts/discourse/ember/resolver.js.es6
+	@link https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6
+
+	Я останавливал отладчик в перечисленных ниже методах следующим способом:
+		if (
+			-1 < parsedName.fullNameWithoutType.toLowerCase().indexOf('shop')
+			&& -1 === ['controller', 'route'].indexOf(parsedName.type)
+		) {
+			debugger;
+		}
+
+	1) customResolve:
+	https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6#L71
+
+	2) resolveTemplate
+	https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6#L116
+
+	3) findTemplate
+	https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6#L148
+
+	4) findUnderscoredTemplate
+	https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6#L163
+
+	5) findAdminTemplate
+	https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6#L171
+
+--}}
+<table class='downloads'>
+	<tbody>
+		{{#each download in controller}}
+			<tr class='download'>
+				<td>{{#link-to 'adminFiles.download' download}}{{download.id}}{{/link-to}}</td>
+				<td>{{download.date}}</td>
+				<td>{{download.fileName}}</td>
+				<td>{{download.userName}}</td>
+				<td>{{download.topicTitle}}</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>

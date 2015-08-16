@@ -1,6 +1,16 @@
 import ClickTrack from 'discourse/lib/click-track';
-export default {name: 'df-restrict-files', initialize() {
+import NavItem from 'discourse/plugins/df-core/models/nav-item';
+export default {name: 'df-restrict-files', initialize(c) {
 	if (Discourse.SiteSettings['«Restrict_Files»_Enabled']) {
+		Discourse.NavItem.reopenClass({
+			buildList : function(category, args) {
+				var list = this._super(category, args);
+				if (!category) {
+					list.push(NavItem.create({href: '/files', name: 'files'}));
+				}
+				return list;
+			}
+		});
 		/** @type {Function} */
 		const original = ClickTrack.trackClick;
 		ClickTrack.trackClick = function(e) {

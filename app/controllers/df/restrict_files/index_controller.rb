@@ -3,6 +3,9 @@ module ::Df::RestrictFiles
 	class IndexController < ::ApplicationController
 		layout false
 		skip_before_filter :preload_json, :check_xhr
+		def count
+			render json: {count: Download.where(upload_id: params[:id]).count}, layout: true
+		end
 		def index
 			viewBase = "#{Rails.root}/plugins/df-restrict-files/app/views/"
 			upload = Upload.find(params[:id])

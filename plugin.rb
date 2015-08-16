@@ -13,14 +13,28 @@ module ::Df
 	end
 end
 after_initialize do
+	module ::Admin::Df::Files
+		class Engine < ::Rails::Engine
+			engine_name 'admin_df_files'
+			isolate_namespace ::Admin::Df::Files
+		end
+	end
+	require_dependency 'admin_constraint'
+	require_dependency 'staff_constraint'
+	::Admin::Df::Files::Engine.routes.draw do
+		get '/' => 'downloads#index', constraints: AdminConstraint.new
+		get '/downloads' => 'downloads#index', constraints: AdminConstraint.new
+	end
+	Discourse::Application.routes.append do
+		namespace :admin, constraints: StaffConstraint.new do
+			mount ::Admin::Df::Files::Engine, at: '/files'
+		end
+	end
 	module ::Df
 		module RestrictFiles
 			class Engine < ::Rails::Engine
 				engine_name 'df_restrict_files'
 				isolate_namespace ::Df::RestrictFiles
-			end
-			def self.userGroups
-				Group.order(:name).pluck(:name)
 			end
 		end
 	end
@@ -29,6 +43,7 @@ after_initialize do
 	end
 	::Df::RestrictFiles::Engine.routes.draw do
 		get '/:id' => 'index#index'
+		get '/count/:id' => 'index#count'
 	end
 	require 'file_store/local_store'
 	FileStore::LocalStore.class_eval do
