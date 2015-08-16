@@ -5,9 +5,9 @@ export default {name: 'df-restrict-files', initialize() {
 		const original = ClickTrack.trackClick;
 		ClickTrack.trackClick = function(e) {
 			/** @type {jQuery} HTMLAnchorElement */
-			var $a = $(e.currentTarget);
+			const $a = $(e.currentTarget);
 			/** @type {String} */
-			var href = $a.attr('href') || $a.data('href');
+			const href = $a.attr('href') || $a.data('href');
 			if (
 				0 !== href.indexOf('/file/')
 				|| 3 === e.which
@@ -35,6 +35,10 @@ export default {name: 'df-restrict-files', initialize() {
 					$a.attr('href', $a.data('href'));
 					$a.data('href', null);
 				}, 50);
+				/** @type {Number} */
+				const postId = parseInt($a.closest("article[id^='post_']").attr('data-post-id'));
+				/** @type {Number} */
+				const topicId = parseInt($a.closest('#topic').attr('data-topic-id'));
 				$.ajax(href, {
 					cache: false
 					,complete: function(ajax, textStatus) {
@@ -52,15 +56,19 @@ export default {name: 'df-restrict-files', initialize() {
 						}
 					}
 					,contentType: 'text/html'
-					/**
-					 * 2015-08-17
-					 * К сожалению, Discourse в Vagrant почему-то теряет стандартный заголовок HTTP
-					 * X-Requested-With, поэтому нам приходится вручную давать нашему серверу понять,
-					 * что этот запрос — асинхронный, и не надо в ответ отдавать файл
-					 * и учитывать файл как уже скачанный.
-					 */
 					,data: {
+						/**
+						 * 2015-08-17
+						 * К сожалению, Discourse в Vagrant почему-то теряет стандартный заголовок HTTP
+						 * X-Requested-With, поэтому нам приходится вручную давать нашему серверу понять,
+						 * что этот запрос — асинхронный, и не надо в ответ отдавать файл
+						 * и учитывать файл как уже скачанный.
+						 */
 						ajax: 1
+						// 2015-08-17
+						// Для статистики
+						,topic: topicId
+						,post: postId
 					}
 					,global: false
 				});

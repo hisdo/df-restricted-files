@@ -54,6 +54,9 @@ module ::Df::RestrictFiles
 				# X-Requested-With, поэтому мы не можем использовать здесь
 				# простой метод request.xhr?, а вынуждены проверять асинхронность запроса вручную.
 				if params['ajax']
+					# http://www.tutorialspoint.com/ruby-on-rails/rails-session-cookies.htm
+					require 'json'
+					session[:df_restrict_files] = {topic: params['topic'], post: params['post']}
 					# 2015-08-16
 					# По AJAX всё равно нельзя загрузить файл,
 					# поэтому просто возвращаем статус успешности.
@@ -63,6 +66,11 @@ module ::Df::RestrictFiles
 					download = Download.new
 					download.user = current_user
 					download.upload = upload
+					sessionData = session[:df_restrict_files]
+					if sessionData
+						download.topic_id = sessionData[:topic]
+						download.post_id = sessionData[:post]
+					end
 					download.save
 					send_file Discourse.store.path_for(upload), filename: upload.original_filename
 				end
