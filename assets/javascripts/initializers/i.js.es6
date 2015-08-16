@@ -40,6 +40,11 @@ export default {name: 'df-restrict-files', initialize() {
 					,complete: function(ajax, textStatus) {
 						/** @link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
 						if (200 === ajax.status) {
+							/**
+							 * 2015-08-16
+							 * По AJAX мы всё равно не можем загрузить файл,
+							 * поэтому вынуждены выполнять запрос повторно.
+							 */
 							original.call(ClickTrack, e);
 						}
 						else {
@@ -47,6 +52,16 @@ export default {name: 'df-restrict-files', initialize() {
 						}
 					}
 					,contentType: 'text/html'
+					/**
+					 * 2015-08-17
+					 * К сожалению, Discourse в Vagrant почему-то теряет стандартный заголовок HTTP
+					 * X-Requested-With, поэтому нам приходится вручную давать нашему серверу понять,
+					 * что этот запрос — асинхронный, и не надо в ответ отдавать файл
+					 * и учитывать файл как уже скачанный.
+					 */
+					,data: {
+						ajax: 1
+					}
 					,global: false
 				});
 			}

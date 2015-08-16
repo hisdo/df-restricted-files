@@ -1,78 +1,33 @@
 # name: df-restrict-files
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
-# version: 1.2.1
+# version: 2.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/33
-Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/df-restrict-files/app/models"]
-module ::RestrictFiles
-	def self.userGroups
-		Group.order(:name).pluck(:name)
+pluginAppPath = "#{Rails.root}/plugins/df-restrict-files/app/"
+Discourse::Application.config.autoload_paths += Dir["#{pluginAppPath}models", "#{pluginAppPath}controllers"]
+module ::Df
+	module RestrictFiles
+		def self.userGroups
+			Group.order(:name).pluck(:name)
+		end
 	end
 end
 after_initialize do
-	module ::RestrictFiles
-		class Engine < ::Rails::Engine
-			engine_name 'restrict_files'
-			isolate_namespace RestrictFiles
-		end
-		require_dependency 'application_controller'
-		class IndexController < ::ApplicationController
-			layout false
-			skip_before_filter :preload_json, :check_xhr
-			def index
-				viewBase = "#{Rails.root}/plugins/df-restrict-files/app/views/"
-				upload = Upload.find(params[:id])
-				# http://stackoverflow.com/a/6937030
-				status = 403;
-				if upload.nil?
-					status = 404
-				else
-					pluginEnabled = SiteSetting.send '«Restrict_Files»_Enabled'
-					if not pluginEnabled
-						if current_user.nil? and !SiteSetting.prevent_anons_from_downloading_files
-							status = 401
-						else
-							status = 200
-						end
-					else
-						accessListType = SiteSetting.send '«Restrict_Files»_Access_List_Type'
-						isWhiteList = 'blacklist' != accessListType
-						accessList = SiteSetting.send '«Restrict_Files»_Access_List'
-						accessList = accessList.split '|'
-						allowed = false;
-						if current_user.nil?
-							if accessList.include? 'everyone'
-								status = 200
-							else
-								status = 401
-							end
-						else
-							if upload.user_id == current_user.id
-								status = 200
-							else
-								userGroupNames = current_user.groups.pluck(:name)
-								intersection = accessList & userGroupNames
-								if intersection.empty?
-									status = 403
-								else
-									status = 200
-								end
-							end
-						end
-					end
-				end
-				if 200 != status
-					render :file => "#{viewBase}#{status}.html.erb", :status => status
-				else
-					send_file Discourse.store.path_for(upload), filename: upload.original_filename
-				end
+	module ::Df
+		module RestrictFiles
+			class Engine < ::Rails::Engine
+				engine_name 'df_restrict_files'
+				isolate_namespace ::Df::RestrictFiles
+			end
+			def self.userGroups
+				Group.order(:name).pluck(:name)
 			end
 		end
 	end
 	Discourse::Application.routes.prepend do
-		mount ::RestrictFiles::Engine, at: 'file'
+		mount ::Df::RestrictFiles::Engine, at: 'file'
 	end
-	RestrictFiles::Engine.routes.draw do
+	::Df::RestrictFiles::Engine.routes.draw do
 		get '/:id' => 'index#index'
 	end
 	require 'file_store/local_store'

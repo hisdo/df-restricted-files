@@ -10,7 +10,7 @@ df_restrict_files:
     client: true
     type: list
     default: 'admins|moderators|staff'
-    choices: '::RestrictFiles.userGroups'
+    choices: '::Df::RestrictFiles.userGroups'
   «Restrict_Files»_Mesage_To_Unauthenticated:
     default: "A message to unauthenticated (anonymous, not logged in) users.<br/>You can use <b>HTML tags</b>, [u]BBCodes[/u] and *Markdown* here, including a link to a payment page.<br/>To receive payments you can use <a href='https://discourse.pro/t/29'>PayPal Buy Now</a> plugin."
     client: true
