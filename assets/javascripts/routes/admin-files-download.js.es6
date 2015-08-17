@@ -1,4 +1,4 @@
-import Download from 'discourse/plugins/df-restrict-files/models/files/download';
+import Download from 'discourse/plugins/df-restrict-files/models/admin/files/download';
 export default Discourse.Route.extend({
 	/** @link http://guides.emberjs.com/v1.11.0/models/finding-records/ */
 	model(params) {

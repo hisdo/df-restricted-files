@@ -1,4 +1,4 @@
-import Download from 'discourse/plugins/df-restrict-files/models/files/download';
+import Download from 'discourse/plugins/df-restrict-files/models/admin/files/download';
 export default Discourse.Route.extend({
 	model() {return this.store.findAll('admin/files/download');}
 	,afterModel(downloads) {

@@ -40,12 +40,22 @@
 	https://github.com/discourse/discourse/blob/v1.4.0.beta6/app/assets/javascripts/discourse/ember/resolver.js.es6#L171
 
 --}}
+<h1>Downloads</h1>
 <table class='downloads'>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Time</th>
+			<th>File</th>
+			<th>Customer</th>
+			<th>Topic</th>
+		</tr>
+	</thead>
 	<tbody>
 		{{#each download in controller}}
 			<tr class='download'>
 				<td>{{#link-to 'adminFiles.download' download}}{{download.id}}{{/link-to}}</td>
-				<td>{{download.date}}</td>
+				<td>{{download.timeFormatted}}</td>
 				<td>{{download.fileName}}</td>
 				<td>{{download.userName}}</td>
 				<td>{{download.topicTitle}}</td>

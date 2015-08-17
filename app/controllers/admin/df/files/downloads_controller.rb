@@ -7,7 +7,7 @@ module ::Admin::Df::Files
 			downloads.each { |d|
 				item = {
 					id: d.id,
-					date: d.created_at,
+					time: d.created_at,
 					userId: d.user.id,
 					userName: d.user.name,
 					fileId: d.upload.id,

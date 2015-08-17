@@ -1,0 +1,9 @@
+.df-files {
+	h1 {
+		font-size: 1.5em;
+		margin-bottom: 20px;
+	}
+	table.downloads {
+		tr {&:nth-child(2n) {background-color: #f8f8f8;}}
+	}
+}

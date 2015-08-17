@@ -20,10 +20,9 @@
  */
 import RestModel from 'discourse/models/rest';
 export default RestModel.extend({
-	descriptionCooked: function() {
-		return Discourse.Markdown.cook(this.get('description'));
-	}.property('description')
-	,name2: function() {
-		return this.get('name') + ' [' + this.get('id') + ']';
-	}.property('name', 'id')
+	timeFormatted: function() {
+		debugger;
+		const date = new Date(this.get('time'));
+		return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+	}.property('time')
 });

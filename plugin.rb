@@ -3,6 +3,7 @@
 # version: 2.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/33
+register_asset 'stylesheets/main.scss'
 pluginAppPath = "#{Rails.root}/plugins/df-restrict-files/app/"
 Discourse::Application.config.autoload_paths += Dir["#{pluginAppPath}models", "#{pluginAppPath}controllers"]
 module ::Df
