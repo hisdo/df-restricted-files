@@ -51,7 +51,7 @@ export default {name: 'df-restrict-files', initialize(c) {
 				const topicId = parseInt($a.closest('#topic').attr('data-topic-id'));
 				$.ajax(href, {
 					cache: false
-					,complete: function(ajax, textStatus) {
+					,complete(ajax, textStatus) {
 						/** @link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
 						if (200 === ajax.status) {
 							/**
