@@ -4,12 +4,11 @@ en:
       site_settings:
         categories:
           df_restricted_files: 'Discourse.PRO Restricted Files'
-    df:
-      files:
-        title: 'Files'
   js:
     df:
       restricted_files:
         acl_type:
           blacklist: 'blacklist'
           whitelist: 'whitelist'
+        admin:
+          topMenuTitle: 'Files'

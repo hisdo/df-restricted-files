@@ -1,13 +1,4 @@
-{{#if routeParam}}
-	{{#link-to route routeParam}}{{i18n label}}{{/link-to}}
-{{else}}
-	{{#if route}}
-		{{#link-to route}}{{i18n label}}{{/link-to}}
-	{{else}}
-		{{#if path}}
-			<a href="{{unbound fullPath}}" data-auto-route="true">{{i18n label}}</a>
-		{{else}}
-			<a href="{{unbound href}}" data-auto-route="true">{{i18n label}}</a>
-		{{/if}}
-	{{/if}}
-{{/if}}
+{{!2016-12-10
+Сделал по аналогии с https://github.com/gdpelican/babble/blob/b2a319/assets/javascripts/discourse/templates/connectors/admin-menu/babble-admin-connector.hbs
+}}
+{{#link-to 'adminFiles'}}{{i18n 'df.restricted_files.admin.topMenuTitle'}}{{/link-to}}
