@@ -52,7 +52,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{#each download in controller}}
+{{! 2016-12-10
+Раньше использовал здесь синтаксис #each ... in ...,
+однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
+http://handlebarsjs.com/builtin_helpers.html#iteration
+Короткий синтаксис с this вместо |...| тоже не работает.
+}}
+		{{#each controller as |download|}}
 			<tr class='download'>
 				<td>{{#link-to 'adminFiles.download' download}}{{download.id}}{{/link-to}}</td>
 				<td>{{download.timeFormatted}}</td>
