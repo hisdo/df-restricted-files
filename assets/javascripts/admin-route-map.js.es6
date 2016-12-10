@@ -1,5 +1,5 @@
-export default {
-	resource: 'admin', map() {
+export default function() {
+	this.route('admin', {resetNamespace: true}, function() {
 		/**
 		 * 2016-12-10
 		 * Fix `this.resource` deprecation: https://github.com/discourse/discourse-tagging/commit/84a99df
@@ -13,5 +13,5 @@ export default {
 			this.route('downloads');
 			this.route('download', {path: '/download/:id'});
 		});
-	}
+	});
 };
