@@ -1,6 +1,6 @@
 ru:
   site_settings:
-    «Restricted_Files»_Enabled: "Включить плагин «<a href='https://discourse.pro/t/33'>Restrict Files</a>»?"
+    «Restricted_Files»_Enabled: "Включить плагин «<a href='https://discourse.pro/t/33'>Restricted Files</a>»?"
     «Restricted_Files»_Access_List_Type: "Тип расположенного ниже списка.<br/>Допустимые значения: <a href='https://wikipedia.org/wiki/Whitelist'>белый список</a> и <a href='https://ru.wikipedia.org/wiki/Чёрный_список'>чёрный список</a>."
     «Restricted_Files»_Access_List: "Перечислите <a href='../../groups'>группы пользователей</a>, которым <b>разрешено</b> (если Вы используете белый список) или <b>запрещено</b> (если Вы используете чёрный список) скачивать файлы с форума.<br/>Файлы всегда доступны для скачивания тем, кто их загрузил."
     «Restricted_Files»_Mesage_To_Unauthenticated: "Сообщение анонимному посетителю."

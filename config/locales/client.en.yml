@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          df_restricted_files: 'Discourse.PRO Restrict Files'
+          df_restricted_files: 'Discourse.PRO Restricted Files'
     df:
       files:
         title: 'Files'
