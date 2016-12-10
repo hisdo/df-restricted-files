@@ -3,13 +3,13 @@ en:
     admin:
       site_settings:
         categories:
-          df_restrict_files: 'Discourse.PRO Restrict Files'
+          df_restricted_files: 'Discourse.PRO Restrict Files'
     df:
       files:
         title: 'Files'
   js:
     df:
-      restrict_files:
+      restricted_files:
         acl_type:
           blacklist: 'blacklist'
           whitelist: 'whitelist'

@@ -1,13 +1,14 @@
-# name: df-restrict-files
+# name: df-restricted-files
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
 # version: 2.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/33
 register_asset 'stylesheets/main.scss'
-pluginAppPath = "#{Rails.root}/plugins/df-restrict-files/app/"
-Discourse::Application.config.autoload_paths += Dir["#{pluginAppPath}models", "#{pluginAppPath}controllers"]
+pluginAppPath = "#{Rails.root}/plugins/df-restricted-files/app/"
+Discourse::Application.config.autoload_paths +=
+	Dir["#{pluginAppPath}models", "#{pluginAppPath}controllers"]
 module ::Df
-	module RestrictFiles
+	module RestrictedFiles
 		def self.userGroups
 			Group.order(:name).pluck(:name)
 		end
@@ -32,17 +33,17 @@ after_initialize do
 		end
 	end
 	module ::Df
-		module RestrictFiles
+		module RestrictedFiles
 			class Engine < ::Rails::Engine
-				engine_name 'df_restrict_files'
-				isolate_namespace ::Df::RestrictFiles
+				engine_name 'df_restricted_files'
+				isolate_namespace ::Df::RestrictedFiles
 			end
 		end
 	end
 	Discourse::Application.routes.prepend do
-		mount ::Df::RestrictFiles::Engine, at: 'file'
+		mount ::Df::RestrictedFiles::Engine, at: 'file'
 	end
-	::Df::RestrictFiles::Engine.routes.draw do
+	::Df::RestrictedFiles::Engine.routes.draw do
 		get '/:id' => 'index#index'
 		get '/count/:id' => 'index#count'
 	end
@@ -149,7 +150,7 @@ after_initialize do
 					url = Discourse.store.store_upload(f, upload, options[:content_type])
 					if url.present?
 						# BEGIN PATCH
-						pluginEnabled = SiteSetting.send '«Restrict_Files»_Enabled'
+						pluginEnabled = SiteSetting.send '«Restricted_Files»_Enabled'
 						if FileHelper.is_image?(filename) or not pluginEnabled
 							upload.url = url
 						else

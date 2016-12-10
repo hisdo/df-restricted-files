@@ -2,7 +2,7 @@ require_dependency 'admin/admin_controller'
 module ::Admin::Df::Files
 	class DownloadsController < ::Admin::AdminController
 		def index
-			downloads = ::Df::RestrictFiles::Download.all
+			downloads = ::Df::RestrictedFiles::Download.all
 			result = []
 			downloads.each { |d|
 				item = {

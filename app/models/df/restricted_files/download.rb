@@ -1,6 +1,6 @@
-module ::Df::RestrictFiles
+module ::Df::RestrictedFiles
 	class Download < ActiveRecord::Base
-		self.table_name = 'df_restrict_files_downloads'
+		self.table_name = 'df_restricted_files_downloads'
 		belongs_to :user
 		validates :user_id, presence: true
 		belongs_to :upload

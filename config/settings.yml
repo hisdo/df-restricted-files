@@ -1,21 +1,21 @@
-df_restrict_files:
-  «Restrict_Files»_Enabled:
+df_restricted_files:
+  «Restricted_Files»_Enabled:
     default: false
     client: true
-  «Restrict_Files»_Access_List_Type:
-    enum: '::Df::RestrictFiles::AccessListType'
+  «Restricted_Files»_Access_List_Type:
+    enum: '::Df::RestrictedFiles::AccessListType'
     default: 'whitelist'
     client: true
-  «Restrict_Files»_Access_List:
+  «Restricted_Files»_Access_List:
     client: true
     type: list
     default: 'admins|moderators|staff'
-    choices: '::Df::RestrictFiles.userGroups'
-  «Restrict_Files»_Mesage_To_Unauthenticated:
+    choices: '::Df::RestrictedFiles.userGroups'
+  «Restricted_Files»_Mesage_To_Unauthenticated:
     default: "A message to unauthenticated (anonymous, not logged in) users.<br/>You can use <b>HTML tags</b>, [u]BBCodes[/u] and *Markdown* here, including a link to a payment page.<br/>To receive payments you can use <a href='https://discourse.pro/t/29'>PayPal Buy Now</a> plugin."
     client: true
     type: df_editor
-  «Restrict_Files»_Mesage_To_Unauthorized:
+  «Restricted_Files»_Mesage_To_Unauthorized:
     default: "A message to unauthorized users.<br/>You can use <b>HTML tags</b>, [u]BBCodes[/u] and *Markdown* here, including a link to a payment page.<br/>To receive payments you can use <a href='https://discourse.pro/t/29'>PayPal Buy Now</a> plugin."
     client: true
     type: df_editor

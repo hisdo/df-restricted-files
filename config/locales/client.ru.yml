@@ -3,13 +3,13 @@ ru:
     admin:
       site_settings:
         categories:
-          df_restrict_files: 'Discourse.PRO Ограничение доступа к файлам'
+          df_restricted_files: 'Discourse.PRO Ограничение доступа к файлам'
     df:
       files:
         title: 'Файлы'
   js:
     df:
-      restrict_files:
+      restricted_files:
         acl_type:
           blacklist: 'чёрный список'
           whitelist: 'белый список'

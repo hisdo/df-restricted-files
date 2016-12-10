@@ -1,4 +1,4 @@
-module ::Df::RestrictFiles
+module ::Df::RestrictedFiles
 	require_dependency 'enum_site_setting'
 	class AccessListType < EnumSiteSetting
 		def self.valid_value?(val)
@@ -6,8 +6,8 @@ module ::Df::RestrictFiles
 		end
 		def self.values
 			@values ||= [
-				{name: 'df.restrict_files.acl_type.whitelist', value: 'whitelist'},
-				{name: 'df.restrict_files.acl_type.blacklist', value: 'blacklist'}
+				{name: 'df.restricted_files.acl_type.whitelist', value: 'whitelist'},
+				{name: 'df.restricted_files.acl_type.blacklist', value: 'blacklist'}
 			]
 		end
 		def self.translate_names?

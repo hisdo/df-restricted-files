@@ -1,7 +1,7 @@
 import ClickTrack from 'discourse/lib/click-track';
 import NavItem from 'discourse/plugins/df-core/models/nav-item';
-export default {name: 'df-restrict-files', initialize(c) {
-	if (Discourse.SiteSettings['«Restrict_Files»_Enabled']) {
+export default {name: 'df-restricted-files', initialize(c) {
+	if (Discourse.SiteSettings['«Restricted_Files»_Enabled']) {
 		/*Discourse.NavItem.reopenClass({
 			buildList : function(category, args) {
 				var list = this._super(category, args);

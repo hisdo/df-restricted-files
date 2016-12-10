@@ -1,5 +1,5 @@
 require_dependency 'application_controller'
-module ::Df::RestrictFiles
+module ::Df::RestrictedFiles
 	class IndexController < ::ApplicationController
 		layout false
 		skip_before_filter :preload_json, :check_xhr
@@ -7,14 +7,14 @@ module ::Df::RestrictFiles
 			render json: {count: Download.where(upload_id: params[:id]).count}, layout: true
 		end
 		def index
-			viewBase = "#{Rails.root}/plugins/df-restrict-files/app/views/"
+			viewBase = "#{Rails.root}/plugins/df-restricted-files/app/views/"
 			upload = Upload.find(params[:id])
 			# http://stackoverflow.com/a/6937030
 			status = 403;
 			if upload.nil?
 				status = 404
 			else
-				pluginEnabled = SiteSetting.send '«Restrict_Files»_Enabled'
+				pluginEnabled = SiteSetting.send '«Restricted_Files»_Enabled'
 				if not pluginEnabled
 					if current_user.nil? and !SiteSetting.prevent_anons_from_downloading_files
 						status = 401
@@ -22,9 +22,9 @@ module ::Df::RestrictFiles
 						status = 200
 					end
 				else
-					accessListType = SiteSetting.send '«Restrict_Files»_Access_List_Type'
+					accessListType = SiteSetting.send '«Restricted_Files»_Access_List_Type'
 					isWhiteList = 'blacklist' != accessListType
-					accessList = SiteSetting.send '«Restrict_Files»_Access_List'
+					accessList = SiteSetting.send '«Restricted_Files»_Access_List'
 					accessList = accessList.split '|'
 					allowed = false;
 					if current_user.nil?
@@ -59,7 +59,7 @@ module ::Df::RestrictFiles
 				if params['ajax']
 					# http://www.tutorialspoint.com/ruby-on-rails/rails-session-cookies.htm
 					require 'json'
-					session[:df_restrict_files] = {topic: params['topic'], post: params['post']}
+					session[:df_restricted_files] = {topic: params['topic'], post: params['post']}
 					# 2015-08-16
 					# По AJAX всё равно нельзя загрузить файл,
 					# поэтому просто возвращаем статус успешности.
@@ -69,7 +69,7 @@ module ::Df::RestrictFiles
 					download = Download.new
 					download.user = current_user
 					download.upload = upload
-					sessionData = session[:df_restrict_files]
+					sessionData = session[:df_restricted_files]
 					if sessionData
 						download.topic_id = sessionData[:topic]
 						download.post_id = sessionData[:post]
