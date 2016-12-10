@@ -21,7 +21,6 @@
 import RestModel from 'discourse/models/rest';
 export default RestModel.extend({
 	timeFormatted: function() {
-		debugger;
 		const date = new Date(this.get('time'));
 		return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 	}.property('time')

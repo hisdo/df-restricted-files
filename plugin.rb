@@ -1,6 +1,6 @@
 # name: df-restricted-files
 # about: The plugin allows to restrict access to attached files so only users of permitted groups can download files from your forum.
-# version: 2.0.0
+# version: 2.1.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/33
 register_asset 'stylesheets/main.scss'

@@ -23,5 +23,5 @@
  * Сравнение: https://github.com/discourse/discourse/compare/2a61cc...bf9153#diff-dbe96be2075fe79f299e5f0c9da57de5
  */
 export default Ember.Controller.extend({
-	_init: function() {this.set('currency', 'USD');}.on('init')
+	_init: function() {}.on('init')
 });

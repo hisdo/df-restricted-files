@@ -57,8 +57,11 @@
 однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
 http://handlebarsjs.com/builtin_helpers.html#iteration
 Короткий синтаксис с this вместо |...| тоже не работает.
+
+Также раньше тут вместо «model» стояло «controller».
+Теперь это уже не работает.
 }}
-		{{#each controller as |download|}}
+		{{#each model as |download|}}
 			<tr class='download'>
 				<td>{{#link-to 'adminFiles.download' download}}{{download.id}}{{/link-to}}</td>
 				<td>{{download.timeFormatted}}</td>
