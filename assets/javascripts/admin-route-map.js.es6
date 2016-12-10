@@ -1,6 +1,10 @@
 export default {
 	resource: 'admin', map() {
-		this.resource('adminFiles', {path: '/files'}, function() {
+		/**
+		 * 2016-12-10
+		 * Fix `this.resource` deprecation: https://github.com/discourse/discourse-tagging/commit/84a99df
+		 */
+		this.route('adminFiles', {path: '/files'}, function() {
 			Discourse.reopen({
 				LOG_TRANSITIONS: true
 				,LOG_TRANSITIONS_INTERNAL: true
