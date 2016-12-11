@@ -1,6 +1,6 @@
 <% message = SiteSetting.send '«Restricted_Files»_Mesage_To_Unauthenticated' %>
 <% if not message.empty? %>
-	<%= raw message %>
+	<%= raw PrettyText.cook(message) %>
 <% else %>
 	A message to unauthenticated (anonymous, not logged in) users.
 	<br/>You can use <b>HTML tags</b> here, including a link to a payment page.
