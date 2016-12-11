@@ -70,7 +70,10 @@ export default {name: 'df-restricted-files', initialize(c) {
 					cache: false
 					,complete(ajax, textStatus) {
 						/** @link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
-						if (200 === ajax.status) {
+						if (200 !== ajax.status) {
+							bootbox.alert(ajax.responseText);
+						}
+						else {
 							// 2015-08-16
 							// По AJAX мы всё равно не можем загрузить файл,
 							// поэтому вынуждены выполнять запрос повторно.
@@ -101,24 +104,18 @@ export default {name: 'df-restricted-files', initialize(c) {
 							 */
 							original.call(ClickTrack, e);
 						}
-						else {
-							bootbox.alert(ajax.responseText);
-						}
 					}
 					,contentType: 'text/html'
 					,data: {
-						/**
-						 * 2015-08-17
-						 * К сожалению, Discourse в Vagrant почему-то теряет стандартный заголовок HTTP
-						 * X-Requested-With, поэтому нам приходится вручную давать нашему серверу понять,
-						 * что этот запрос — асинхронный, и не надо в ответ отдавать файл
-						 * и учитывать файл как уже скачанный.
-						 */
+						// 2015-08-17
+						// К сожалению, Discourse в Vagrant почему-то теряет стандартный заголовок HTTP
+						// X-Requested-With, поэтому нам приходится вручную давать нашему серверу понять,
+						// что этот запрос — асинхронный, и не надо в ответ отдавать файл
+						// и учитывать файл как уже скачанный.
 						ajax: 1
 						// 2015-08-17
 						// Для статистики
-						,topic: topicId
-						,post: postId
+						,post: postId, topic: topicId
 					}
 					,global: false
 				});
