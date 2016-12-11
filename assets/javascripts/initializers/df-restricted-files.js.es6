@@ -66,45 +66,43 @@ export default {name: 'df-restricted-files', initialize(c) {
 				const postId = parseInt($a.closest("article[id^='post_']").attr('data-post-id'));
 				/** @type {Number} */
 				const topicId = parseInt($a.closest('#topic').attr('data-topic-id'));
-				$.ajax(href, {
-					cache: false
-					,complete(ajax, textStatus) {
-						/** @link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
-						if (200 !== ajax.status) {
-							bootbox.alert(ajax.responseText);
-						}
-						else {
-							// 2015-08-16
-							// По AJAX мы всё равно не можем загрузить файл,
-							// поэтому вынуждены выполнять запрос повторно.
-							/**
-							 * 2016-12-11
-							 * В ядре есть код:
-									export function wantsNewWindow(e) {
-										return (e.isDefaultPrevented() || e.shiftKey || e.metaKey || e.ctrlKey
-											|| (e.button && e.button !== 0));
-									}
-							 * https://github.com/discourse/discourse/blob/v1.7.0.beta9/app/assets/javascripts/discourse/lib/intercept-click.js.es6#L3-L5
-							 * Этот код вызывается из стандартного click-track:
-							 * https://github.com/discourse/discourse/blob/v1.7.0.beta9/app/assets/javascripts/discourse/lib/click-track.js.es6#L66-L67
-							 * Наше красивое решение позволяет нам вернуть false из wantsNewWindow()
-							 * и, таким образом, передать обработку запроса серверу.
-							 *
-							 *
-							 * /clicks/track?url=%2Ffile%2F112&post_id=40&topic_id=33
-							 */
-							e.isDefaultPrevented = function() {return false;};
-							/**
-							 * 2016-12-11
-							 * В принципе, вместо этой строчки и строчки выше мы могли бы просто вызвать:
-							 * DiscourseURL.redirectTo(href);
-							 * Однако вызов родительского ClickTrack позволяет нам задействовать
-							 * стандартный счётчик кликов (хотя мы всё равно используем ещё и наш
-							 * для отчётности перед администраторами).
-							 */
-							original.call(ClickTrack, e);
-						}
+				$.ajax(href, {cache: false, complete(ajax) {
+					/** @link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
+					if (200 !== ajax.status) {
+						bootbox.alert(ajax.responseText);
 					}
+					else {
+						// 2015-08-16
+						// По AJAX мы всё равно не можем загрузить файл,
+						// поэтому вынуждены выполнять запрос повторно.
+						/**
+						 * 2016-12-11
+						 * В ядре есть код:
+								export function wantsNewWindow(e) {
+									return (e.isDefaultPrevented() || e.shiftKey || e.metaKey || e.ctrlKey
+										|| (e.button && e.button !== 0));
+								}
+						 * https://github.com/discourse/discourse/blob/v1.7.0.beta9/app/assets/javascripts/discourse/lib/intercept-click.js.es6#L3-L5
+						 * Этот код вызывается из стандартного click-track:
+						 * https://github.com/discourse/discourse/blob/v1.7.0.beta9/app/assets/javascripts/discourse/lib/click-track.js.es6#L66-L67
+						 * Наше красивое решение позволяет нам вернуть false из wantsNewWindow()
+						 * и, таким образом, передать обработку запроса серверу.
+						 *
+						 *
+						 * /clicks/track?url=%2Ffile%2F112&post_id=40&topic_id=33
+						 */
+						e.isDefaultPrevented = () => false;
+						/**
+						 * 2016-12-11
+						 * В принципе, вместо этой строчки и строчки выше мы могли бы просто вызвать:
+						 * DiscourseURL.redirectTo(href);
+						 * Однако вызов родительского ClickTrack позволяет нам задействовать
+						 * стандартный счётчик кликов (хотя мы всё равно используем ещё и наш
+						 * для отчётности перед администраторами).
+						 */
+						original.call(ClickTrack, e);
+					}
+				}
 					,contentType: 'text/html'
 					,data: {
 						// 2015-08-17
