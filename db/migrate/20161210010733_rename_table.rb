@@ -1,5 +1,6 @@
 # 2016-12-10
 # vagrant ssh -c "rails generate migration RenameTable"
+# rake db:migrate:redo VERSION=20161210010733
 class RenameTable < ActiveRecord::Migration
 	def change
 		# 2016-12-10
